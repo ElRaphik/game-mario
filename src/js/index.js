@@ -6,7 +6,7 @@ init()
 const PLAYER_CONSTANTS = {
     // small
     move_speed_small: 120,
-    jump_force_small: 360,
+    jump_force_small: 420,
     // big
     move_speed_big: 120,
     jump_force_big: 550,
@@ -124,6 +124,11 @@ scene('game', ({level, score}) => {
             destroy(obj)
             gameLevel.spawn('}', obj.gridPos.sub(0,0))
         }
+        if(obj.is('1-up-surprise')) {
+            gameLevel.spawn('L', obj.gridPos.sub(0,1))
+            destroy(obj)
+            gameLevel.spawn('}', obj.gridPos.sub(0,0))
+        }
     })
 
     // collisions
@@ -137,7 +142,7 @@ scene('game', ({level, score}) => {
         scoreLabel.text = 'score ' + score.toString()
     })
     player.collides('goomba', (d) => {player.was_jumping ? destroy(d) : gameOver({score: score, level: level})})
-    player.collides('pipe', () => {
+    player.collides('tunnel', () => {
         keyPress('down', () => {
             if(level < 31) { // max level should be 31 at the end
                 go("game", {
@@ -168,8 +173,11 @@ scene('game', ({level, score}) => {
     action('mushroom', (m) => {
         m.move(50, 0)
     })
-
+    action('1-up', (up) => {
+        up.move(50, 0)
+    })
     // ennemies behaviour
+    const goombas = get('goomba')
     action('goomba', (d) => {
         d.move(-20, 0)
     })
@@ -204,22 +212,27 @@ function chooseConfig(level) {
         // define items sprite-sign relations
         '$': [sprite('coin'), 'coin'],
         '#': [sprite('mushroom'), solid(), 'mushroom', body()],
+        'L': [sprite('mushroom'), solid(), '1-up', body()],
 
 
         // define blocks ....
-        '=': [sprite('block'), solid(), 'block'],
-        '}': [sprite('unboxed'), solid()],
+        '=': [sprite('block'), solid(), 'ground'],
+        'B': [sprite('brick'), solid(), 'block'],
+        '}': [sprite('unboxed'), solid(), 'block'],
         // surprises
         '*': [sprite('surprise'), solid(), 'mushroom-surprise'],
         '%': [sprite('surprise'), solid(), 'coin-surprise'],
+        '<': [sprite('surprise'), solid(), '1-up-surprise'],
         // pipes
         '(': [sprite('pipe-bottom-left'), solid(), scale(0.5)],
         ')': [sprite('pipe-bottom-right'), solid(), scale(0.5)],
         '-': [sprite('pipe-top-left'), solid(), scale(0.5), 'pipe'],
         '+': [sprite('pipe-top-right'), solid(), scale(0.5), 'pipe'],
+        'T': [sprite('pipe-top-left'), solid(), scale(0.5), 'tunnel'],
+        'U': [sprite('pipe-top-right'), solid(), scale(0.5), 'tunnel'],
 
 
         // define ennemies ....
-        '^': [sprite('goomba'), solid(), 'goomba', body()],
+        '^': [sprite('goomba'), solid(), ['goomba', 'ennemy'], body()],
     }
 }
