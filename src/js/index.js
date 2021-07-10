@@ -220,3 +220,32 @@ scene('end', ({score}) => {
 
 // run the thing
 start("game", {level: 0, score: 0})
+
+function chooseConfig(level) {
+    return {
+        width: 20,
+        height: 20,
+
+
+        // define items sprite-sign relations
+        '$': [sprite('coin'), 'coin'],
+        '#': [sprite('mushroom'), solid(), 'mushroom', body()],
+
+
+        // define blocks ....
+        '=': [sprite('block'), solid(), 'block'],
+        '}': [sprite('unboxed'), solid()],
+        // surprises
+        '*': [sprite('surprise'), solid(), 'mushroom-surprise'],
+        '%': [sprite('surprise'), solid(), 'coin-surprise'],
+        // pipes
+        '(': [sprite('pipe-bottom-left'), solid(), scale(0.5)],
+        ')': [sprite('pipe-bottom-right'), solid(), scale(0.5)],
+        '-': [sprite('pipe-top-left'), solid(), scale(0.5), 'pipe'],
+        '+': [sprite('pipe-top-right'), solid(), scale(0.5), 'pipe'],
+
+
+        // define ennemies ....
+        '^': [sprite('goomba'), solid(), 'goomba', body()],
+    }
+}
