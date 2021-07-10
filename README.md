@@ -8,7 +8,7 @@ As said earlier, I used [kaboom.js](https://kaboomjs.com) as game engine. It is 
 It requires basically no installation.
 
 ## Play the game
-You can try one version of the game [here](https://soranzo.iiens.net) or you can copy the repo and launch it on your own server/locally.
+You can try one version of the game [here](https://soranzo.iiens.net/game-mario/) or you can copy the repo and launch it on your own server/locally.
 You have to be connected to internet to play, because the sprites I use are not stored in the game's files but on imgur.
 
 ## How to play
