@@ -1,5 +1,5 @@
 import {init} from './init.js'
-import {maps} from './game_level/maps.js'
+import {maps} from './maps.js'
 
 init()
 
